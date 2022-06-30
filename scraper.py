@@ -1,4 +1,5 @@
 # Importing libraries 
+from distro import like
 import requests #Gets us the html data
 from bs4 import BeautifulSoup #Scrapes the html data
 import lxml
@@ -10,12 +11,17 @@ html = requests.get("https://old.reddit.com/r/datascience/", headers=headers).te
 #Using BeautifulSoup for scraping the HTML code
 soup = BeautifulSoup(html, "lxml") #Entering our HTML code into BeautifulSoup 
 
+#Finding data about posts
 attrs = {'class': 'thing'}
 for post in soup.find_all('div', attrs=attrs): #For everypost
     # Some values are None so we put it in a try and except
     try:
         title = post.find('a', class_ = "title").text #Title of the post
-        flair = post.find("span", class_ = "linkflairlabel").text
+        flair = post.find("span", class_ = "linkflairlabel").text #Flair title of the post
+        upvotes = post.find("div", class_ = "score unvoted").text #No. of upvotes
+
+        #Replacing . with None
+        if upvotes == "•" : 
+            upvotes = "None"
     except:
         continue
-    
