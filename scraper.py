@@ -12,4 +12,10 @@ soup = BeautifulSoup(html, "lxml") #Entering our HTML code into BeautifulSoup
 
 attrs = {'class': 'thing'}
 for post in soup.find_all('div', attrs=attrs): #For everypost
-    title = post.find('a', class_="title").text #Title of the post
+    # Some values are None so we put it in a try and except
+    try:
+        title = post.find('a', class_ = "title").text #Title of the post
+        flair = post.find("span", class_ = "linkflairlabel").text
+    except:
+        continue
+    
