@@ -9,3 +9,7 @@ html = requests.get("https://old.reddit.com/r/datascience/", headers=headers).te
 
 #Using BeautifulSoup for scraping the HTML code
 soup = BeautifulSoup(html, "lxml") #Entering our HTML code into BeautifulSoup 
+
+attrs = {'class': 'thing'}
+for post in soup.find_all('div', attrs=attrs): #For everypost
+    title = post.find('a', class_="title").text #Title of the post
