@@ -5,17 +5,23 @@ import lxml
 import csv #We will convert our data to CSV
 import time
 
+#Getting user data
+community = str(input("Which subreddit to scrape(Case-sensitive): "))
+posts_scrape = int(input("Number of posts to scrape(Whole-number): "))
+
+
 headers = {'User-Agent': 'Mozilla/5.0'} #Mimicing a browser visit
-html = requests.get("https://old.reddit.com/r/datascience/", headers=headers).text #Getting the HTML code of the community
+url = "https://old.reddit.com/r/" + community + "/"
+html = requests.get(url, headers=headers).text #Getting the HTML code of the community
 
 #Using BeautifulSoup for scraping the HTML code
 soup = BeautifulSoup(html, "lxml") #Entering our HTML code into BeautifulSoup 
 
 counter = 1
 
-while (counter <= 100000):
+while (counter <= posts_scrape):
     posts = soup.find_all('div', attrs = {'class': 'thing'})
-    
+
     for post in posts:
         # Some values are None so we put it in a try and except
         try:
