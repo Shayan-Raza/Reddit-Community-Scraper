@@ -49,6 +49,6 @@ while (counter <= posts_scrape):
     #Add more posts from other pages
     next_button = soup.find("span", class_="next-button")
     next_page_link = next_button.find("a").attrs['href']
-    time.sleep(120)
+    time.sleep(2)
     html = requests.get(next_page_link, headers=headers)
     soup = BeautifulSoup(html.text, 'lxml')
