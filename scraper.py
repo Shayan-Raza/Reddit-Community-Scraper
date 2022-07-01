@@ -13,9 +13,9 @@ soup = BeautifulSoup(html, "lxml") #Entering our HTML code into BeautifulSoup
 
 counter = 1
 
-posts = soup.find_all('div', attrs = {'class': 'thing'})
-
 while (counter <= 100000):
+    posts = soup.find_all('div', attrs = {'class': 'thing'})
+    
     for post in posts:
         # Some values are None so we put it in a try and except
         try:
@@ -44,5 +44,5 @@ while (counter <= 100000):
     next_button = soup.find("span", class_="next-button")
     next_page_link = next_button.find("a").attrs['href']
     time.sleep(120)
-    page = requests.get(next_page_link, headers=headers)
-    soup = BeautifulSoup(page.text, 'html.parser')
+    html = requests.get(next_page_link, headers=headers)
+    soup = BeautifulSoup(html.text, 'lxml')
